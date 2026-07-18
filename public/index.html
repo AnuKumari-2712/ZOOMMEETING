@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoom Elite - Next-Gen Video Conferencing</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Toast Notification Engine Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Auth Portal View System -->
+    <div id="auth-portal" class="auth-portal">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="logo-badge">ZE</div>
+                <h1>Zoom <span class="accent-text">Elite</span></h1>
+                <p>Enterprise-grade WebRTC Video Communication Platform</p>
+            </div>
+            <div class="auth-body">
+                <div class="input-group">
+                    <label for="username-input">Display Name</label>
+                    <input type="text" id="username-input" placeholder="Enter your full name" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label for="room-input">Meeting Room Identifier</label>
+                    <div class="room-input-row">
+                        <input type="text" id="room-input" placeholder="Enter custom or generated Room ID" autocomplete="off">
+                        <button id="generate-room-btn" type="button" class="btn btn-secondary" title="Generate Secure ID">Auto ID</button>
+                    </div>
+                </div>
+                <button id="join-meeting-btn" class="btn btn-primary btn-block">Join / Create Elite Session</button>
+            </div>
+            <div class="auth-footer">
+                <p>&copy; 2026 Zoom Elite Infrastructure Inc. Secure & Encrypted.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Main Application Container Interface -->
+    <div id="app-container" class="app-container hidden">
+        <!-- Main Interactive Application Frame -->
+        <main class="main-stage">
+            <!-- Header Operations Banner -->
+            <header class="stage-header">
+                <div class="session-meta">
+                    <span class="status-indicator-dot animate-pulse"></span>
+                    <span id="session-room-id-display">Room: --</span>
+                    <button id="copy-session-id-btn" class="control-badge" title="Copy Session ID">Copy ID</button>
+                    <button id="copy-invite-link-btn" class="control-badge" title="Copy Invitation Link">Copy Invite Link</button>
+                </div>
+                <div class="session-timer-wrapper">
+                    <span class="timer-icon">🕒</span>
+                    <span id="session-clock">00:00:00</span>
+                </div>
+            </header>
+
+            <!-- Adaptive Mesh Stream Video Grid Component Grid Layout -->
+            <div id="video-mesh-grid" class="video-mesh-grid">
+                <!-- Local User Video Platform Item -->
+                <div id="local-video-container" class="video-card-wrapper pinned-mode">
+                    <div class="video-loader"></div>
+                    <div class="avatar-fallback hidden">U</div>
+                    <video id="local-video-element" autoplay muted playsinline></video>
+                    <div class="video-overlay-details">
+                        <span class="user-label-tag"><span class="host-tag">Host</span> You</span>
+                        <div class="indicator-cluster">
+                            <span class="speaking-wave hidden">🔊</span>
+                            <span class="status-icon status-hand hidden">✋</span>
+                            <span class="status-icon status-mic">🎙️</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lower Persistent Desktop Application Control Center Dock -->
+            <footer class="control-dock">
+                <div class="dock-section dock-left">
+                    <button id="dock-btn-mic" class="dock-action-btn active" title="Toggle Microphone">
+                        <span class="btn-icon">🎙️</span>
+                        <span class="btn-label">Mute</span>
+                    </button>
+                    <button id="dock-btn-camera" class="dock-action-btn active" title="Toggle Camera">
+                        <span class="btn-icon">📹</span>
+                        <span class="btn-label">Stop Video</span>
+                    </button>
+                </div>
+
+                <div class="dock-section dock-center">
+                    <button id="dock-btn-share" class="dock-action-btn" title="Share Screen">
+                        <span class="btn-icon">📤</span>
+                        <span class="btn-label">Share Screen</span>
+                    </button>
+                    <button id="dock-btn-hand" class="dock-action-btn" title="Raise / Lower Hand">
+                        <span class="btn-icon">✋</span>
+                        <span class="btn-label">Raise Hand</span>
+                    </button>
+                    <button id="dock-btn-chat-toggle" class="dock-action-btn counter-badge-wrapper" title="Open Chat View Panel">
+                        <span class="btn-icon">💬</span>
+                        <span class="btn-label">Chat</span>
+                        <span id="chat-counter" class="notification-badge hidden">0</span>
+                    </button>
+                    <button id="dock-btn-participants-toggle" class="dock-action-btn" title="Open Registration View Panel">
+                        <span class="btn-icon">👥</span>
+                        <span class="btn-label">Participants (<span id="participant-counter-label">1</span>)</span>
+                    </button>
+                </div>
+
+                <div class="dock-section dock-right">
+                    <button id="dock-btn-leave" class="btn btn-danger-action" title="Leave Current Meeting">Leave Session</button>
+                    <button id="dock-btn-end" class="btn btn-danger-action hidden" title="Terminate Session for All Users">End For All</button>
+                </div>
+            </footer>
+        </main>
+
+        <!-- Right Slidout Auxiliary Sidebar Context Pane System -->
+        <aside id="sidebar-panel" class="sidebar-panel hidden">
+            <!-- Header Component -->
+            <div class="sidebar-tabs">
+                <button id="tab-btn-chat" class="tab-trigger active">Chat Engine</button>
+                <button id="tab-btn-participants" class="tab-trigger">Participants Registry</button>
+                <button id="sidebar-close-trigger" class="sidebar-close-btn">&times;</button>
+            </div>
+
+            <!-- Tab View 1: Real-Time Persistent Chat Portal -->
+            <div id="pane-chat-view" class="pane-content-wrapper active-pane">
+                <div id="chat-messages-scroller" class="chat-messages-scroller">
+                    <!-- Dynamic chat instances get loaded here sequentially -->
+                </div>
+                <div id="typing-broadcast-indicator" class="typing-broadcast-indicator hidden">Someone is typing...</div>
+                <div class="chat-input-row">
+                    <input type="text" id="chat-input-element" placeholder="Type message to room..." autocomplete="off">
+                    <button id="chat-emoji-trigger" class="emoji-tray-btn" type="button" title="Insert Quick Emoji">😊</button>
+                    <button id="chat-send-btn" class="chat-submit-btn" type="button">Send</button>
+                </div>
+                <div id="emoji-popup-tray" class="emoji-popup-tray hidden">
+                    <span class="emoji-item">👍</span><span class="emoji-item">😮</span>
+                    <span class="emoji-item">👏</span><span class="emoji-item">🎉</span>
+                    <span class="emoji-item">❤️</span><span class="emoji-item">🔥</span>
+                    <span class="emoji-item">🚀</span><span class="emoji-item">💡</span>
+                </div>
+            </div>
+
+            <!-- Tab View 2: Live Room Participant Roster Infrastructure -->
+            <div id="pane-participants-view" class="pane-content-wrapper">
+                <div class="host-management-deck">
+                    <button id="host-action-mute-all" class="btn btn-secondary btn-small btn-block modal-host-auth hidden">Mute All Participants</button>
+                    <button id="host-action-disable-video-all" class="btn btn-secondary btn-small btn-block modal-host-auth hidden mt-8">Disable All Cameras</button>
+                </div>
+                <div id="participants-list-registry" class="participants-list-registry">
+                    <!-- Iterated internal list elements are rendered here -->
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Socket.io Transport and Core Functional Logic System Layer Scripts -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
